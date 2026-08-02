@@ -29,6 +29,9 @@ daylog = "daylog.cli:main"
 [dependency-groups]
 # Tooling to build the Windows installer:  uv sync --extra tray --group build
 build = ["pyinstaller>=6.21.0"]
+dev = [
+    "pytest>=9.1.1",
+]
 
 [build-system]
 requires = ["hatchling"]
@@ -36,3 +39,6 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["daylog"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
