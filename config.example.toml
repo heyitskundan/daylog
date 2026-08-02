@@ -1,0 +1,76 @@
+# daylog configuration. Copy to config.toml and edit.
+# config.toml is gitignored and overrides these defaults.
+
+[storage]
+# Where the SQLite DB and raw screenshots live. Defaults to ~/.daylog
+# data_dir = "C:/Users/<you>/.daylog"
+# How many days to keep full-resolution screenshots before purging to thumbnail+OCR only.
+screenshot_retention_days = 14
+
+[capture]
+# Screenshot every N seconds while you are active (in addition to on window-switch).
+interval_seconds = 90
+# Debounce: ignore window switches faster than this many seconds apart.
+switch_debounce_seconds = 4
+# Treat you as "away" after this many seconds of no keyboard/mouse input.
+idle_threshold_seconds = 120
+# JPEG quality + max width for stored screenshots (full image, before thumbnailing).
+jpeg_quality = 75
+max_width = 2560
+# Apps whose windows should never be screenshotted (case-insensitive substring match).
+exclude_apps = ["1Password", "Bitwarden", "KeePass"]
+# Global hotkey for a manual (badged) screenshot when the tray app is running.
+hotkey = "ctrl+alt+s"
+
+[watcher]
+# The built-in activity watcher — reads the foreground window and idle time straight from
+# Windows. Nothing to install; there is no external tracker to run.
+# How often to tail shell history (the window itself is sampled every 2s).
+poll_seconds = 30
+# Read the active browser tab's URL from the address bar (UI Automation). Turn off if you
+# would rather daylog never looked at what you're browsing.
+track_urls = true
+
+[segment]
+# Start a new segment when idle exceeds this many seconds.
+idle_gap_seconds = 180
+# Window-title token-diff ratio (0..1) above which a title change splits a segment.
+title_change_ratio = 0.5
+
+[obsidian]
+# Path to your Obsidian vault, and the subfolder daylog writes into.
+# vault_path = "C:/Users/<you>/Obsidian/Main"
+# If vault_path is unset or no longer exists, daylog auto-detects the vault from Obsidian's
+# own registry by matching vault_name_hint (so moving the vault doesn't break anything).
+auto_detect = true
+vault_name_hint = "Activity Tracker"
+notes_subdir = "Activity"
+attachments_subdir = "Activity/attachments"
+# Embed all task screenshots into notes (true) or only manual/key shots (false).
+embed_all_screenshots = true
+# Max width of screenshots copied into the vault (downscaled to keep vault small).
+embed_max_width = 1280
+
+[ai]
+# Off by default — labeling is an explicit opt-in step.
+# provider: "ollama" (local) | "lmstudio" (local) | "claude" | "openai" (any OpenAI-compatible)
+provider = "ollama"
+ollama_model = "llama3.1"
+claude_model = "claude-opus-4-8"   # API key from ANTHROPIC_API_KEY
+# LM Studio: load a model + enable the local server. Empty model = auto-detect the loaded one.
+lmstudio_base_url = "http://localhost:1234/v1"
+lmstudio_model = ""
+# Generic OpenAI / OpenAI-compatible. Key from OPENAI_API_KEY.
+openai_base_url = "https://api.openai.com/v1"
+openai_model = "gpt-4o-mini"
+
+[terminal]
+# Tail shell history to reconstruct commands you ran. Empty = auto-detect per OS.
+# powershell_history = "C:/Users/<you>/AppData/Roaming/Microsoft/Windows/PowerShell/PSReadLine/ConsoleHost_history.txt"
+enabled = true
+
+[claude_code]
+# Use Claude Code session transcripts (your prompts + Claude's actions) as the primary
+# "what did I do" signal — far richer than window titles when you work in Claude Code.
+enabled = true
+# logs_dir = "C:/Users/<you>/.claude/projects"   # default is ~/.claude/projects

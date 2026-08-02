@@ -1,0 +1,19 @@
+config.toml
+.venv/
+# uv keeps uv.lock committed; the venv is local.
+__pycache__/
+*.pyc
+*.db
+*.db-wal
+*.db-shm
+/data/
+
+# Windows installer build artifacts
+/build/
+/dist/
+packaging/daylog.ico
+
+# Machine-generated launchers (written by `daylog autostart --launcher`); regenerate
+# per-machine rather than committing an absolute path.
+/Start daylog.vbs
+/start-daylog.sh

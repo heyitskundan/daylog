@@ -1,0 +1,38 @@
+[project]
+name = "daylog"
+version = "0.1.0"
+description = "Local-first activity tracker: what I did today, where I spent time, and where I struggled."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "mss>=9.0.1",           # fast cross-platform screenshots
+    "Pillow>=10.3.0",       # thumbnails + downscaling
+    "requests>=2.32.0",     # talking to local/cloud LLM servers
+    "winsdk>=1.0.0b10",     # Windows' built-in OCR engine (no external install)
+    "uiautomation>=2.0.29", # reads the browser address bar for the active tab's URL
+]
+# Everything daylog needs to capture, summarize and publish is in this list: the activity
+# watcher is built in (Windows APIs), OCR is the OS engine, the dashboard is http.server,
+# and notes are plain markdown. No external tracker, no Obsidian, no LLM required.
+
+[project.optional-dependencies]
+# Cross-platform OCR fallback (Windows uses its own engine):  uv sync --extra ocr
+ocr = ["rapidocr-onnxruntime>=1.3.0"]
+# Local + cloud LLMs for Phase 2 AI summaries:  uv sync --extra ai
+ai = ["ollama>=0.3.0", "anthropic>=0.40.0"]
+# Desktop tray shell (Phase 3): system tray + global hotkey.  uv sync --extra tray
+tray = ["pystray>=0.19.5", "keyboard>=0.13.5; sys_platform == 'win32'", "pynput>=1.7.6; sys_platform != 'win32'"]
+
+[project.scripts]
+daylog = "daylog.cli:main"
+
+[dependency-groups]
+# Tooling to build the Windows installer:  uv sync --extra tray --group build
+build = ["pyinstaller>=6.21.0"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["daylog"]

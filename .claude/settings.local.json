@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(uv --version)",
+      "Bash(.venv/Scripts/python.exe --version)",
+      "Bash(.venv/Scripts/python.exe -m PyInstaller --version)",
+      "Bash(where.exe ISCC)",
+      "Bash(where.exe winget *)",
+      "Bash(winget list *)",
+      "Bash(.venv/Scripts/python.exe -m pip install pyinstaller)"
+    ]
+  }
+}
