@@ -17,3 +17,4 @@ packaging/daylog.ico
 # per-machine rather than committing an absolute path.
 /Start daylog.vbs
 /start-daylog.sh
+.DS_Store
